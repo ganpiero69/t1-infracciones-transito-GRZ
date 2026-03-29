@@ -1,4 +1,3 @@
-CREATE DATABASE IF NOT EXISTS infracciones_db;
 USE infracciones_db;
 
 INSERT IGNORE INTO tipos_infraccion (codigo, descripcion, monto_base) VALUES
