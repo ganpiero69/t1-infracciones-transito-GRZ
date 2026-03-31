@@ -11,6 +11,8 @@ import edu.pe.cibertec.infracciones.repository.PagoRepository;
 import edu.pe.cibertec.infracciones.service.IPagoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.time.Clock;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
@@ -21,6 +23,7 @@ public class PagoServiceImpl implements IPagoService {
 
     private final PagoRepository pagoRepository;
     private final MultaRepository multaRepository;
+    private final Clock clock;
 
     @Override
     public PagoResponseDTO procesarPago(Long multaId) {
@@ -30,7 +33,7 @@ public class PagoServiceImpl implements IPagoService {
         if (multa.getEstado() == EstadoMulta.PAGADA)
             throw new PagoYaRealizadoException(multaId);
 
-        LocalDate hoy = LocalDate.now();
+        LocalDate hoy = LocalDate.now(clock);
         long diasDesdeEmision = ChronoUnit.DAYS.between(multa.getFechaEmision(), hoy);
 
         double monto = multa.getMonto();

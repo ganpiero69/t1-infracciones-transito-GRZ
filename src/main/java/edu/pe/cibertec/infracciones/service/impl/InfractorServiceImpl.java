@@ -4,7 +4,9 @@ import edu.pe.cibertec.infracciones.dto.InfractorRequestDTO;
 import edu.pe.cibertec.infracciones.dto.InfractorResponseDTO;
 import edu.pe.cibertec.infracciones.exception.InfractorNotFoundException;
 import edu.pe.cibertec.infracciones.exception.VehiculoNotFoundException;
+import edu.pe.cibertec.infracciones.model.EstadoMulta;
 import edu.pe.cibertec.infracciones.model.Infractor;
+import edu.pe.cibertec.infracciones.model.Multa;
 import edu.pe.cibertec.infracciones.model.Vehiculo;
 import edu.pe.cibertec.infracciones.repository.InfractorRepository;
 import edu.pe.cibertec.infracciones.repository.VehiculoRepository;
@@ -54,6 +56,23 @@ public class InfractorServiceImpl implements IInfractorService {
                 .orElseThrow(() -> new VehiculoNotFoundException(vehiculoId));
         infractor.getVehiculos().add(vehiculo);
         infractorRepository.save(infractor);
+    }
+
+    @Override
+    public void verificarBloqueo(Long idInfractor) {
+
+        Infractor infractorDb = infractorRepository
+                .findById(idInfractor)
+                .orElseThrow(() -> new IllegalArgumentException("Infractor con ID" + idInfractor + "no existe."));
+
+        List<Multa> multasVencidas = infractorDb.getMultas().stream().filter(m -> m.getEstado() == EstadoMulta.VENCIDA).toList();
+
+        //SOLO SI TIENE 3 O MAS MULTAS VENCIDAS POR LOGICA SE BLOQUEA AL INFRACTOR
+        if(multasVencidas.size() >= 3){
+            infractorDb.setBloqueado(true);
+            infractorRepository.save(infractorDb);
+        }
+
     }
 
 

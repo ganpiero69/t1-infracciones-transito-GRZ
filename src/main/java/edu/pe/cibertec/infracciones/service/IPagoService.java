@@ -6,4 +6,5 @@ import java.util.List;
 public interface IPagoService {
     PagoResponseDTO procesarPago(Long multaId);
     List<PagoResponseDTO> obtenerPagosPorInfractor(Long infractorId);
+
 }

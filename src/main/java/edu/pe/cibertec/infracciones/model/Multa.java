@@ -45,4 +45,5 @@ public class Multa {
             inverseJoinColumns = @JoinColumn(name = "tipo_infraccion_id")
     )
     private List<TipoInfraccion> tiposInfraccion;
+
 }

@@ -7,6 +7,7 @@ import edu.pe.cibertec.infracciones.model.*;
 import edu.pe.cibertec.infracciones.repository.*;
 import edu.pe.cibertec.infracciones.service.IMultaService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -93,6 +94,21 @@ public class MultaServiceImpl implements IMultaService {
                 .stream()
                 .map(this::mapToResponse)
                 .toList();
+    }
+
+    @Override
+    public void actualizarEstados() {
+        List<Multa> multasPendientes = multaRepository.findByEstado(EstadoMulta.PENDIENTE);
+
+        LocalDate hoy = LocalDate.now();
+
+        for(Multa multa : multasPendientes){
+            if(multa.getFechaVencimiento().isBefore(hoy)){
+                multa.setEstado(EstadoMulta.VENCIDA);
+                multaRepository.save(multa);
+            }
+        }
+
     }
 
     private MultaResponseDTO mapToResponse(Multa multa) {

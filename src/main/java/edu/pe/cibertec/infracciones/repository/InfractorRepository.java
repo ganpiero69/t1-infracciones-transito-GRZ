@@ -8,4 +8,5 @@ public interface InfractorRepository extends JpaRepository<Infractor, Long> {
     Optional<Infractor> findByDni(String dni);
     boolean existsByDni(String dni);
     boolean existsByEmail(String email);
+
 }

@@ -35,4 +35,9 @@ public class Infractor {
             inverseJoinColumns = @JoinColumn(name = "vehiculo_id")
     )
     private List<Vehiculo> vehiculos;
+
+    //AGREGO PROPIEDAD DE NAVEGACION
+    @OneToMany
+    private List<Multa> multas;
+
 }
