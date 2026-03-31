@@ -23,7 +23,9 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.test.context.ActiveProfiles;
 
+@ActiveProfiles("test")
 @ExtendWith(MockitoExtension.class)
 @DisplayName("PagoServiceImplTest - Unit Test With Mockito y Clock")
 public class PagoServiceImplTest {

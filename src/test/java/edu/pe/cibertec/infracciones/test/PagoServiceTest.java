@@ -11,6 +11,7 @@ import edu.pe.cibertec.infracciones.service.impl.PagoServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.time.Clock;
 import java.time.LocalDate;
@@ -21,6 +22,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+@ActiveProfiles("test")
 public class PagoServiceTest {
 
     private PagoRepository pagoRepository;
